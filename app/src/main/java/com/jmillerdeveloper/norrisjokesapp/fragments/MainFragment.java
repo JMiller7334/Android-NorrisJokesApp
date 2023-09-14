@@ -12,24 +12,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jmillerdeveloper.norrisjokesapp.R;
 import com.jmillerdeveloper.norrisjokesapp.adapters.ItemTouchHelperCallback;
 import com.jmillerdeveloper.norrisjokesapp.adapters.RecyclerAdapter;
-import com.jmillerdeveloper.norrisjokesapp.databinding.ActivityMainBinding;
 import com.jmillerdeveloper.norrisjokesapp.databinding.FragmentMainBinding;
 
 import java.util.ArrayList;
 
-public class mainFragment extends Fragment {
+public class MainFragment extends Fragment {
 
     private RecyclerView mainRecycler;
     private RecyclerAdapter recyclerAdapter;
 
-    public mainFragment() {
+    public MainFragment() {
         // Required empty public constructor
     }
-    public static mainFragment newInstance() {
-        mainFragment fragment = new mainFragment();
+    public static MainFragment newInstance() {
+        MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         return fragment;
     }
