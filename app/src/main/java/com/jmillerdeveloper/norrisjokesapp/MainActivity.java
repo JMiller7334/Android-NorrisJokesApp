@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jmillerdeveloper.norrisjokesapp.databinding.ActivityMainBinding;
-import com.jmillerdeveloper.norrisjokesapp.fragments.mainFragment;
+import com.jmillerdeveloper.norrisjokesapp.fragments.MainFragment;
+import com.jmillerdeveloper.norrisjokesapp.viewModels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,11 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
         //check savedInstance, avoid recreation on config changes
         if (savedInstanceState == null) {
-            mainFragment mainFrag = mainFragment.newInstance();
+            MainFragment mainFrag = MainFragment.newInstance();
 
             //replace the fragment container with the main fragment
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, mainFrag, "mainFragment").commit();
+                    .replace(R.id.fragment_container, mainFrag, "MainFragment").commit();
 
         }
     }
