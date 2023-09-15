@@ -1,6 +1,11 @@
-package com.jmillerdeveloper.norrisjokesapp.api;
+package com.jmillerdeveloper.norrisjokesapp.repositories;
 
 import android.util.Log;
+
+import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +23,7 @@ import java.net.URL;
 public class ChuckNorrisJokesApi {
 
     public interface ApiCallback {
-        void onApiResult(String result);
+        void onApiResult(JSONObject result);
         void onApiError(String error);
     }
 
@@ -35,7 +40,7 @@ public class ChuckNorrisJokesApi {
 
         //create a thread for the api to run on.
         new Thread(() -> {
-            String result = getResultFromAPI(apiUrl);
+            JSONObject result = getResultFromAPI(apiUrl);
             if (result != null) {
                 callback.onApiResult(result);
             } else {
@@ -43,7 +48,7 @@ public class ChuckNorrisJokesApi {
             }
         }).start();
     }
-    private String getResultFromAPI(String apiUrl){
+    private JSONObject getResultFromAPI(String apiUrl){
         Log.i("API_debug", "app: getting result from api.");
 
         //variable to hold the received response from the api
@@ -62,13 +67,14 @@ public class ChuckNorrisJokesApi {
             reader.close(); //disable the reader when it finishes
             connection.disconnect(); //close the connection as it is no longer needed.
 
-        } catch (IOException error) {
+            return new JSONObject(apiResponse.toString());
+
+        } catch (IOException |JSONException error) {
             //exception handling for the api call.
             error.printStackTrace();
             Log.e("api_debug", "Error occurred during NorrisJokeApi call - getResult(): " + error.getMessage());
 
             return null; //return null to indicate api failure to the repository.
         }
-        return apiResponse.toString();
     }
 }

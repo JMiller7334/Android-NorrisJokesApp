@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.jmillerdeveloper.norrisjokesapp.adapters.ItemTouchHelperCallback;
 import com.jmillerdeveloper.norrisjokesapp.adapters.RecyclerAdapter;
 import com.jmillerdeveloper.norrisjokesapp.databinding.FragmentMainBinding;
+import com.jmillerdeveloper.norrisjokesapp.repositories.ChuckNorrisJokesRepository;
 import com.jmillerdeveloper.norrisjokesapp.viewModels.MainViewModel;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class MainFragment extends Fragment {
         View view = binding.getRoot();
 
         MainViewModel viewModel = new MainViewModel();
-        viewModel.getNorrisJokes();
+        viewModel.fetchJokeData(null);
 
         //onCreate code here.
         ArrayList<String> testData = new ArrayList<>();
