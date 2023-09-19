@@ -3,26 +3,37 @@ package com.jmillerdeveloper.norrisjokesapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jmillerdeveloper.norrisjokesapp.R;
+import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
+import com.jmillerdeveloper.norrisjokesapp.models.RecyclerDiffCallback;
 import com.jmillerdeveloper.norrisjokesapp.models.RecyclerViewHolder;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
         implements ItemTouchHelperInterface{ //this includes the funcs from the interface.
 
-    private ArrayList<String> dataSet; //the array of info that will populate the recyclerView.
+    private final List<ChuckNorrisJokeData> dataSet; //the array of info that will populate the recyclerView.
 
-    public RecyclerAdapter(ArrayList<String> dataSet){
+    public RecyclerAdapter(List<ChuckNorrisJokeData> dataSet){
         this.dataSet = dataSet;
+    }
+
+    public void updateListItems(List<ChuckNorrisJokeData> incomingDataSet){
+        final RecyclerDiffCallback diffCallback =
+                new RecyclerDiffCallback(this.dataSet, incomingDataSet);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        this.dataSet.clear();
+        this.dataSet.addAll(incomingDataSet);
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @NonNull
@@ -35,8 +46,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        String item = dataSet.get(position);
-        holder.textView.setText(item);
+        ChuckNorrisJokeData jokeClass = dataSet.get(position);
+        holder.textView.setText(jokeClass.getValue());
     }
 
     @Override

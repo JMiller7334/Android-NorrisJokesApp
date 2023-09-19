@@ -3,20 +3,22 @@ package com.jmillerdeveloper.norrisjokesapp.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 /*CHUCK NORRIS JOKE DATA
 * this class holds joke data from the api.
 * this classes data is transfer to the recycler.
 * */
 public class ChuckNorrisJokeData {
-    private String id;
-    private String value;
-    private String iconUrl;
-    private String createdAt;
-    private String updatedAt;
-    private String url;
+    private final String id;
+    private final String value;
+    private final String iconUrl;
+    private final String createdAt;
+    private final String updatedAt;
+    private final String url;
 
     //none api related:
-    private Boolean saved;
+    private final Boolean saved;
 
     //SETTERS FOR CLASS:
     public ChuckNorrisJokeData(JSONObject json) throws JSONException {
@@ -58,5 +60,27 @@ public class ChuckNorrisJokeData {
 
     public Boolean getIsSaved(){
         return saved;
+    }
+
+    //OVERRIDES:
+
+    /*INFO:
+    * checks if the object passed in has the same id this
+    * instance of the class and returns true/false based on that.
+    * */
+    @Override
+    public boolean equals(Object obj){
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        ChuckNorrisJokeData that = (ChuckNorrisJokeData) obj;
+        return Objects.equals(id, that.id);
+    }
+
+    /*INFO:
+    * generates a hash code based on the unique identifier of the class(Id)
+    * */
+    @Override
+    public int hashCode(){
+        return Objects.hash(id);
     }
 }

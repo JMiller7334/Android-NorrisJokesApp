@@ -2,8 +2,6 @@ package com.jmillerdeveloper.norrisjokesapp.repositories;
 
 import android.util.Log;
 
-import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +17,6 @@ import java.net.URL;
 * A json will be returned as string from the is class if the call is successful
 * Otherwise null will be returned.
 * */
-
 public class ChuckNorrisJokesApi {
 
     public interface ApiCallback {
