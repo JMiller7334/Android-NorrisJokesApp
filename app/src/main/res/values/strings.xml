@@ -4,4 +4,10 @@
     <string name="ic_jokes">Jokes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="refresh_button">Refresh Button</string>
+    <string name="share_button">Share button</string>
+    <string name="joke_icon">Joke Icon</string>
+    <string name="fav_button">Fav button</string>
+    <string name="category">Category:</string>
+    <string name="selected_category">Selected Category:</string>
 </resources>

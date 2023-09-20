@@ -16,6 +16,8 @@ import com.jmillerdeveloper.norrisjokesapp.models.RecyclerViewHolder;
 import java.util.Collections;
 import java.util.List;
 
+import com.squareup.picasso.Picasso;
+
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
         implements ItemTouchHelperInterface{ //this includes the funcs from the interface.
@@ -48,6 +50,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         ChuckNorrisJokeData jokeClass = dataSet.get(position);
         holder.textView.setText(jokeClass.getValue());
+
+        String imgUrl = jokeClass.getIconUrl();
+        Picasso.get()
+                .load(imgUrl)
+                .placeholder(R.drawable.baseline_chat_24)
+                .error(R.drawable.baseline_chat_bubble_24)
+                .into(holder.icon);
     }
 
     @Override

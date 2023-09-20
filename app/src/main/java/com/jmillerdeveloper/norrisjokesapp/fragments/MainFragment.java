@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,20 +15,29 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jmillerdeveloper.norrisjokesapp.R;
 import com.jmillerdeveloper.norrisjokesapp.adapters.ItemTouchHelperCallback;
 import com.jmillerdeveloper.norrisjokesapp.adapters.RecyclerAdapter;
 import com.jmillerdeveloper.norrisjokesapp.databinding.FragmentMainBinding;
+import com.jmillerdeveloper.norrisjokesapp.enums.EnumJokeCategory;
 import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
 import com.jmillerdeveloper.norrisjokesapp.viewModels.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainFragment extends Fragment {
 
     private MainViewModel viewModel;
     private FragmentMainBinding binding;
+
+    //RECYCLER VARIABLES:
     private RecyclerAdapter recyclerAdapter;
+
+    //SPINNER VARIABLES:
+    private ArrayAdapter spinnerAdapter;
+    private List<String> spinnerOptions;
 
     public MainFragment() {
         // Required empty public constructor
@@ -49,16 +60,25 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         //set up binding and view
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         //use the viewModel Provider to setup viewModel; ties the view model to this fragments lifeCycle.
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        viewModel.fetchJokeData(null);
+        viewModel.fetchJokeData();
+
+        binding.btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.fetchJokeData();
+            }
+        });
 
         //onCreate code here.
         initRecyclerView(binding);
+        initSpinner(binding);
         observeLiveData();
         return view;
     }
@@ -68,6 +88,30 @@ public class MainFragment extends Fragment {
         liveData.observe(getViewLifecycleOwner(), newData -> {
             if (newData != null){
                 recyclerAdapter.updateListItems(newData);
+            }
+        });
+    }
+
+    private void initSpinner(FragmentMainBinding binding){
+        spinnerOptions = EnumJokeCategory.enumAsList();
+        spinnerAdapter = new ArrayAdapter<>(requireContext(), com.google.android.material.R.layout.support_simple_spinner_dropdown_item, spinnerOptions);
+        spinnerAdapter.setDropDownViewResource(com.google.android.material.R.layout.support_simple_spinner_dropdown_item);
+        binding.spinCategory.setAdapter(spinnerAdapter);
+
+        binding.spinCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedCategory = spinnerOptions.get(i);
+                spinnerOptions.set(i, "Category: "+selectedCategory);
+                spinnerAdapter.notifyDataSetChanged();
+
+                viewModel.setSelectedCategory(i);
+                binding.spinCategory.setSelection(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //does nothing
             }
         });
     }
