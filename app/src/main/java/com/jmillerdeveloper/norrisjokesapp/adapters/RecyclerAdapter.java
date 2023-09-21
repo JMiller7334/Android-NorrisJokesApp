@@ -10,17 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jmillerdeveloper.norrisjokesapp.R;
 import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
-import com.jmillerdeveloper.norrisjokesapp.models.RecyclerDiffCallback;
+import com.jmillerdeveloper.norrisjokesapp.services.RecyclerDiffCallback;
 import com.jmillerdeveloper.norrisjokesapp.models.RecyclerViewHolder;
 
 import java.util.Collections;
 import java.util.List;
 
+import com.jmillerdeveloper.norrisjokesapp.services.ItemTouchHelperInterface;
 import com.squareup.picasso.Picasso;
 
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
-        implements ItemTouchHelperInterface{ //this includes the funcs from the interface.
+        implements ItemTouchHelperInterface { //this includes the funcs from the interface.
 
     private final List<ChuckNorrisJokeData> dataSet; //the array of info that will populate the recyclerView.
 

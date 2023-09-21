@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jmillerdeveloper.norrisjokesapp.R;
-import com.jmillerdeveloper.norrisjokesapp.adapters.ItemTouchHelperCallback;
+import com.jmillerdeveloper.norrisjokesapp.adapters.SpinnerAdapter;
+import com.jmillerdeveloper.norrisjokesapp.services.ItemTouchHelperCallback;
 import com.jmillerdeveloper.norrisjokesapp.adapters.RecyclerAdapter;
 import com.jmillerdeveloper.norrisjokesapp.databinding.FragmentMainBinding;
 import com.jmillerdeveloper.norrisjokesapp.enums.EnumJokeCategory;
@@ -25,7 +26,6 @@ import com.jmillerdeveloper.norrisjokesapp.viewModels.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainFragment extends Fragment {
 
@@ -94,26 +94,9 @@ public class MainFragment extends Fragment {
 
     private void initSpinner(FragmentMainBinding binding){
         spinnerOptions = EnumJokeCategory.enumAsList();
-        spinnerAdapter = new ArrayAdapter<>(requireContext(), com.google.android.material.R.layout.support_simple_spinner_dropdown_item, spinnerOptions);
-        spinnerAdapter.setDropDownViewResource(com.google.android.material.R.layout.support_simple_spinner_dropdown_item);
-        binding.spinCategory.setAdapter(spinnerAdapter);
-
-        binding.spinCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedCategory = spinnerOptions.get(i);
-                spinnerOptions.set(i, "Category: "+selectedCategory);
-                spinnerAdapter.notifyDataSetChanged();
-
-                viewModel.setSelectedCategory(i);
-                binding.spinCategory.setSelection(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                //does nothing
-            }
-        });
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getContext(), viewModel, binding.spinCategory,
+                spinnerOptions, com.google.android.material.R.layout.support_simple_spinner_dropdown_item);
+        spinnerAdapter.setSpinnerListener();
     }
 
     private void initRecyclerView(FragmentMainBinding binding){

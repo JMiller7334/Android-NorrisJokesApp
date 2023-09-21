@@ -1,9 +1,11 @@
-package com.jmillerdeveloper.norrisjokesapp.adapters;
+package com.jmillerdeveloper.norrisjokesapp.services;
 
 //imports
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.jmillerdeveloper.norrisjokesapp.adapters.RecyclerAdapter;
 
 import javax.crypto.spec.PSource;
 

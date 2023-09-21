@@ -1,4 +1,4 @@
-package com.jmillerdeveloper.norrisjokesapp.repositories;
+package com.jmillerdeveloper.norrisjokesapp.services;
 
 import android.util.Log;
 

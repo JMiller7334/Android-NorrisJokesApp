@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.jmillerdeveloper.norrisjokesapp.enums.EnumJokeCategory;
 import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
+import com.jmillerdeveloper.norrisjokesapp.services.ChuckNorrisJokesApi;
 import com.jmillerdeveloper.norrisjokesapp.viewModels.MainViewModel;
 
 import org.json.JSONException;

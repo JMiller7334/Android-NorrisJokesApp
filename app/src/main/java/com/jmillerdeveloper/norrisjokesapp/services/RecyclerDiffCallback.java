@@ -1,7 +1,9 @@
-package com.jmillerdeveloper.norrisjokesapp.models;
+package com.jmillerdeveloper.norrisjokesapp.services;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
+
+import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
 
 import java.util.List;
 import java.util.Objects;
