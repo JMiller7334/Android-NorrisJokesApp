@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,13 +13,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jmillerdeveloper.norrisjokesapp.R;
-import com.jmillerdeveloper.norrisjokesapp.adapters.SpinnerAdapter;
-import com.jmillerdeveloper.norrisjokesapp.services.ItemTouchHelperCallback;
 import com.jmillerdeveloper.norrisjokesapp.adapters.RecyclerAdapter;
+import com.jmillerdeveloper.norrisjokesapp.adapters.SpinnerAdapter;
 import com.jmillerdeveloper.norrisjokesapp.databinding.FragmentMainBinding;
 import com.jmillerdeveloper.norrisjokesapp.enums.EnumJokeCategory;
 import com.jmillerdeveloper.norrisjokesapp.models.ChuckNorrisJokeData;
+import com.jmillerdeveloper.norrisjokesapp.services.ItemTouchHelperCallback;
 import com.jmillerdeveloper.norrisjokesapp.viewModels.MainViewModel;
 
 import java.util.ArrayList;
@@ -34,10 +31,6 @@ public class MainFragment extends Fragment {
 
     //RECYCLER VARIABLES:
     private RecyclerAdapter recyclerAdapter;
-
-    //SPINNER VARIABLES:
-    private ArrayAdapter spinnerAdapter;
-    private List<String> spinnerOptions;
 
     public MainFragment() {
         // Required empty public constructor
@@ -69,14 +62,8 @@ public class MainFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.fetchJokeData();
 
-        binding.btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.fetchJokeData();
-            }
-        });
-
         //onCreate code here.
+        binding.btnRefresh.setOnClickListener(view1 -> viewModel.fetchJokeData());
         initRecyclerView(binding);
         initSpinner(binding);
         observeLiveData();
@@ -93,7 +80,8 @@ public class MainFragment extends Fragment {
     }
 
     private void initSpinner(FragmentMainBinding binding){
-        spinnerOptions = EnumJokeCategory.enumAsList();
+        //SPINNER VARIABLES:
+        List<String> spinnerOptions = EnumJokeCategory.enumAsList();
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getContext(), viewModel, binding.spinCategory,
                 spinnerOptions, com.google.android.material.R.layout.support_simple_spinner_dropdown_item);
         spinnerAdapter.setSpinnerListener();
